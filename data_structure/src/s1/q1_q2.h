@@ -1,6 +1,7 @@
+#ifndef Q1_Q2_H
+#define Q1_Q2_H
 #include <chrono>
 #include <iostream>
-#include <vector>
 
 using namespace std;
 using namespace chrono;
@@ -13,34 +14,6 @@ template <typename A> struct RES_CAL_TIME {
     run_time = _run_time;
   }
 };
-
-template <typename T> T get_input(string msg);
-unsigned long long safe_multiply(unsigned long long num1,
-                                 unsigned long long num2);
-unsigned long long recursive_fac(unsigned long long num);
-unsigned long long iteration(unsigned long long num);
-
-template <typename A> RES_CAL_TIME<A> calcuate_time(A (*func)(A), A arg);
-
-int main() {
-  cout << "\n";
-  unsigned long long number = get_input<unsigned int>("Enter number:");
-  auto recursive_res =
-      calcuate_time<unsigned long long>(&recursive_fac, number);
-  auto linear_res = calcuate_time<unsigned long long>(&iteration, number);
-
-  cout << "\nname_function\t\t time\t\tresult \n";
-  cout << "===============================================\n";
-
-  cout << "iteration_fac\t\t " << linear_res.run_time.count() << "ns"
-       << "\t\t" << linear_res.value << endl;
-
-  cout << "recursive_fac \t\t " << recursive_res.run_time.count() << "ns"
-       << "\t\t" << recursive_res.value << endl;
-
-  cout << "\n\n";
-  return 0;
-}
 
 // check overflow
 unsigned long long safe_multiply(unsigned long long num1,
@@ -80,17 +53,22 @@ template <typename T> T get_input(string msg) {
 
 unsigned long long recursive_fac(unsigned long long num) {
   if (num <= 1)
-    return num;
+    return 1;
 
   return safe_multiply(num, recursive_fac(num - 1));
 }
 
-unsigned long long iteration(unsigned long long num) {
+unsigned long long iteration_fac(unsigned long long num) {
   long long result = num;
+
+  if (result == 0)
+    result += 1;
+
   while (num > 2) {
     num -= 1;
     result = safe_multiply(num, result);
   }
+
   return result;
 }
 
@@ -108,3 +86,4 @@ template <typename A> RES_CAL_TIME<A> calcuate_time(A (*func)(A), A arg) {
   //  time:  total time function execute
   return RES_CAL_TIME<A>(res, time);
 }
+#endif //
