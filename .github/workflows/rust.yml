@@ -1,4 +1,4 @@
-name: Rust
+name: Data_Structure
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: data_structure
+    - name: Build
       run: cd ./data_structure/test && cargo build --verbose
     - name: Run tests
       run: cd ./data_structure/test && cargo test --verbose
