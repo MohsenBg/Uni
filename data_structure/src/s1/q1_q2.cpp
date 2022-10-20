@@ -1,4 +1,6 @@
-#include "q1_q2.h"
+#include "c_time.h"
+#include "factorial.h"
+#include "input.h"
 #include <chrono>
 #include <iostream>
 using namespace std;
@@ -6,10 +8,13 @@ using namespace chrono;
 
 int main() {
   cout << "\n";
-  unsigned long long number = get_input<unsigned int>("Enter number:");
+
+  unsigned long long number =
+      input_handler::get_input<unsigned int>("Enter number:");
   auto recursive_res =
-      calcuate_time<unsigned long long>(&recursive_fac, number);
-  auto linear_res = calcuate_time<unsigned long long>(&iteration_fac, number);
+      time_handler::calcuate_time<unsigned long long>(&recursive_fac, number);
+  auto linear_res =
+      time_handler::calcuate_time<unsigned long long>(&iteration_fac, number);
 
   cout << "\nname_function\t\t time\t\tresult \n";
   cout << "===============================================\n";
