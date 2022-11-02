@@ -14,7 +14,7 @@ fn main() {
     let bindings = bindgen::Builder::default()
         .clang_arg("-x")
         .clang_arg("c++")
-        .clang_arg("-std=c++14")
+        .clang_arg("-std=c++20")
         .header("wrapper.cpp")
         .allowlist_function("recursive_fac")
         .allowlist_function("iteration_fac")
