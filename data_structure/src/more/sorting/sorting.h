@@ -197,7 +197,7 @@ public:
     copy(array, array + array_size, sorted_array);
 
     for (int i = 0; i < array_size; i++) {
-      T min_index = i;
+      int min_index = i;
       for (int j = i + 1; j < array_size; j++) {
         if (sorted_array[j] < sorted_array[min_index])
           min_index = j;
@@ -239,5 +239,4 @@ public:
     return sorted_array;
   }
 };
-
 #endif
