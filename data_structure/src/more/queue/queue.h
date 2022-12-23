@@ -2,6 +2,7 @@
 #define QUEUE_H
 #include "tabulate.hpp"
 #include <iostream>
+#include <vector>
 using namespace tabulate;
 using namespace std;
 
@@ -12,11 +13,19 @@ private:
   int len;
   int front;
   int rear;
-  int getIndex() {
-    int tmp = this->front;
-    if (this->front == copacity - 1)
-      this->front = -1;
-    return tmp;
+
+  void addfront() {
+    if (front >= copacity - 1)
+      this->front = 0;
+    else
+      this->front++;
+  }
+
+  void addrear() {
+    if (rear >= copacity - 1)
+      this->rear = 0;
+    else
+      this->rear++;
   }
 
 public:
@@ -32,23 +41,19 @@ public:
     if (this->isFull())
       return;
 
-    int index = getIndex();
-    storage[index] = value;
+    storage[this->front] = value;
     this->len++;
-    this->front++;
+    this->addfront();
   }
 
   int remove() {
     this->len--;
-    this->rear++;
-
-    if (this->rear >= copacity)
-      this->rear = 0;
-
-    return storage[rear];
+    int oldValue = storage[this->rear];
+    this->addrear();
+    return oldValue;
   }
 
-  void log() {
+  void logStorage() {
     Table result;
     result.add_row({"index", "value", "status"});
     for (int i = 0; i < this->copacity; i++) {
@@ -67,6 +72,28 @@ public:
       result.add_row({to_string(i), to_string(storage[i])});
     }
 
+    result.format().padding_right(2).padding_left(2).font_align(
+        FontAlign::center);
+    result.print(cout);
+    cout << endl;
+  }
+
+  void logQueue() {
+    Table result;
+    Table::Row_t row;
+
+    int index = this->rear;
+    int hlep = this->length();
+    while (hlep != 0) {
+      if (index >= this->copacity)
+        index = 0;
+
+      row.push_back(to_string(storage[index]));
+      index++;
+      hlep--;
+    }
+
+    result.add_row(row);
     result.format().padding_right(2).padding_left(2).font_align(
         FontAlign::center);
     result.print(cout);
